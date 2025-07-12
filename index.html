@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Compra en USD</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      padding: 30px;
+      color: #333;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #006666;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #006666;
+      color: white;
+      font-size: 1em;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #009999;
+    }
+
+    .resultados {
+      margin-top: 25px;
+      background-color: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .resultados p {
+      margin: 10px 0;
+    }
+
+    #comprarBtn {
+      background-color: #25D366;
+    }
+
+    #comprarBtn:hover {
+      background-color: #1ebe5a;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💵 Calculadora USD a ARS</h1>
+
+  <label for="concepto">Concepto de la compra:</label>
+  <input type="text" id="concepto" placeholder="Ej: Netflix, Spotify, Amazon, etc.">
+
+  <label for="precioUsd">Precio en USD:</label>
+  <input type="number" id="precioUsd" placeholder="Ej: 100">
+
+  <label for="cotizacionDolarApp">Cotización DolarApp (ARS/USD):</label>
+  <input type="number" id="cotizacionDolarApp" placeholder="Ej: 1350">
+
+  <button onclick="calcular()">Calcular Total</button>
+
+  <div class="resultados" id="resultados" style="display:none;">
+    <h3>Resultado:</h3>
+    <p id="conDolarApp"></p>
+    <p id="conTarjeta"></p>
+    <button id="comprarBtn" onclick="comprarPorWhatsApp()">Comprar</button>
+  </div>
+
+  <script>
+    let totalDolarApp = 0;
+
+    function calcular() {
+      const precioUsd = parseFloat(document.getElementById('precioUsd').value);
+      const cotizacion = parseFloat(document.getElementById('cotizacionDolarApp').value);
+
+      if (isNaN(precioUsd) || isNaN(cotizacion)) {
+        alert("Por favor completá todos los campos correctamente.");
+        return;
+      }
+
+      totalDolarApp = precioUsd * cotizacion;
+      const totalTarjeta = precioUsd * cotizacion * 1.6;
+
+      document.getElementById('conDolarApp').textContent = `✅ Usando DolarApp: $${totalDolarApp.toFixed(2)} ARS`;
+      document.getElementById('conTarjeta').textContent = `💳 Usando Tarjeta común (60% imp.): $${totalTarjeta.toFixed(2)} ARS`;
+
+      document.getElementById('resultados').style.display = 'block';
+    }
+
+    function comprarPorWhatsApp() {
+      const concepto = document.getElementById('concepto').value.trim();
+      const precioUsd = parseFloat(document.getElementById('precioUsd').value);
+
+      if (!concepto || isNaN(precioUsd) || !totalDolarApp) {
+        alert("Asegurate de haber calculado primero y de completar todos los campos.");
+        return;
+      }
+
+      const mensaje = `Pibe, quiero comprar ${concepto}, sale $${precioUsd} y queda en $${totalDolarApp.toFixed(2)}`;
+      const mensajeEncoded = encodeURIComponent(mensaje);
+      const numero = '543512619874';
+      const url = `https://wa.me/${numero}?text=${mensajeEncoded}`;
+
+      window.open(url, '_blank');
+    }
+  </script>
+
+</body>
+</html>
