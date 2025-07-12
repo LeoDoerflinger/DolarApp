@@ -123,7 +123,7 @@
       const mensaje = `Pibe, quiero comprar ${concepto}, sale $${precioUsd} y queda en $${totalDolarApp.toFixed(2)}`;
       const mensajeEncoded = encodeURIComponent(mensaje);
       const numero = '543512619874';
-      const url = `https://wa.me/${numero}?text=${mensajeEncoded}`;
+      const url = `https://api.whatsapp.com/send?phone=${numero}&text=${mensajeEncoded}`;
 
       window.open(url, '_blank');
     }
