@@ -112,21 +112,21 @@
     }
 
     function comprarPorWhatsApp() {
-      const concepto = document.getElementById('concepto').value.trim();
-      const precioUsd = parseFloat(document.getElementById('precioUsd').value);
+  const concepto = document.getElementById('concepto').value.trim();
+  const precioUsd = parseFloat(document.getElementById('precioUsd').value);
 
-      if (!concepto || isNaN(precioUsd) || !totalDolarApp) {
-        alert("Asegurate de haber calculado primero y de completar todos los campos.");
-        return;
-      }
+  if (!concepto || isNaN(precioUsd) || !totalDolarApp) {
+    alert("Asegurate de haber calculado primero y de completar todos los campos.");
+    return;
+  }
 
-      const mensaje = `Pibe, quiero comprar ${concepto}, sale $${precioUsd} y queda en $${totalDolarApp.toFixed(2)}`;
-      const mensajeEncoded = encodeURIComponent(mensaje);
-      const numero = '543512619874';
-      const url = `https://api.whatsapp.com/send?phone=${numero}&text=${mensajeEncoded}`;
+  const mensaje = `Pibe, quiero comprar ${concepto}, sale $${precioUsd} y queda en $${totalDolarApp.toFixed(2)}`;
+  const mensajeEncoded = encodeURIComponent(mensaje);
+  const numero = '543512619874';
+  const url = `https://api.whatsapp.com/send?phone=${numero}&text=${mensajeEncoded}`;
 
-      window.open(url, '_blank');
-    }
+  window.open(url, '_blank');
+}
   </script>
 
 </body>
